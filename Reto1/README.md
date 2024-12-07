@@ -1,5 +1,5 @@
 
-# Reto técnico - Devops Senior
+# Reto Técnico - Devops Senior
 
 Este reto técnico fue desarrollado para el puesto de Devops Senior usando tenologias como Github Actions, Terraform y AWS ECS.
 
