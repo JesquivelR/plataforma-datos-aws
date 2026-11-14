@@ -73,7 +73,7 @@ resource "aws_route_table_association" "public_subnet_association" {
 }
 
 resource "aws_eip" "nat_eip" {
-  domain   = "vpc"
+  domain = "vpc"
 
   tags = {
     Name = "plataforma-datos-${var.project}-nat-eip"
@@ -113,7 +113,7 @@ resource "aws_route_table_association" "private_subnet_association_2" {
 }
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  name       = "rds-subnet-group"
+  name = "rds-subnet-group"
   subnet_ids = [
     aws_subnet.private_subnet.id,
     aws_subnet.private_subnet_2.id
@@ -133,7 +133,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["10.0.0.0/16"]  # Permitir acceso desde dentro de la VPC
+    cidr_blocks = ["10.0.0.0/16"] # Permitir acceso desde dentro de la VPC
   }
 
   egress {

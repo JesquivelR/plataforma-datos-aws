@@ -12,7 +12,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
   bucket = aws_s3_bucket.datalake.id
 
   rule {
-    id = "log"
+    id     = "log"
     status = "Enabled"
 
     expiration {
@@ -55,7 +55,7 @@ data "aws_iam_policy_document" "allow_requests" {
   statement {
     sid       = "AllowSSLRequestsOnly"
     effect    = "Deny"
-    resources = [aws_s3_bucket.datalake.arn,"${aws_s3_bucket.datalake.arn}/*",]
+    resources = [aws_s3_bucket.datalake.arn, "${aws_s3_bucket.datalake.arn}/*", ]
     actions   = ["s3:*"]
 
     condition {

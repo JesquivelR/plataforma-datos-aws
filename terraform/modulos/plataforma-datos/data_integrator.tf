@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "s3_policy_document" {
 
 data "aws_iam_policy_document" "rds_policy_document" {
   statement {
-    effect    = "Allow"
+    effect = "Allow"
     actions = [
       "rds:DescribeDBInstances",
       "rds:DescribeDBClusters",
@@ -42,8 +42,8 @@ resource "aws_iam_role" "glue_service_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "glue_service_role_policy_attachment" {
-    role = aws_iam_role.glue_service_role.name
-    policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+  role       = aws_iam_role.glue_service_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
 }
 
 resource "aws_iam_role_policy" "glue_service_role_policy" {
@@ -79,8 +79,8 @@ resource "aws_glue_classifier" "s3_crawler_classifier" {
 }
 
 resource "aws_glue_crawler" "s3_crawler" {
-  name         = "s3_crawler"
-  role         = aws_iam_role.glue_service_role.arn
+  name          = "s3_crawler"
+  role          = aws_iam_role.glue_service_role.arn
   database_name = aws_glue_catalog_database.s3_db_crawler.name
 
   s3_target {
