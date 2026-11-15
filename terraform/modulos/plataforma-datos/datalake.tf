@@ -3,7 +3,7 @@ resource "aws_s3_bucket" "datalake" {
 
   tags = {
     Name        = "plataforma-datos-bucket"
-    Environment = "${var.environment}"
+    Environment = var.environment
   }
   force_destroy = true
 }

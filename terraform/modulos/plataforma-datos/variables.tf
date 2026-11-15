@@ -1,21 +1,15 @@
-variable "aws_region" {
-  description = "AWS region"
-  default     = "us-west-1"
-}
-
 variable "availability_zone" {
-  description = "AWS availability zone"
+  description = "Zona de disponibilidad principal"
+  type        = string
   default     = "us-west-1a"
 }
 
 variable "environment" {
   description = "Ambiente de la aplicación"
-}
-
-variable "company" {
-  description = "Nombre de la compañia"
+  type        = string
 }
 
 variable "project" {
-  description = "Proyecto de la compañia"
+  description = "Nombre del proyecto"
+  type        = string
 }
