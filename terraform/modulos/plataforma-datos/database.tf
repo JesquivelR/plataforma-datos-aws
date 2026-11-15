@@ -1,4 +1,6 @@
 resource "aws_db_instance" "rds_instance" {
+  #checkov:skip=CKV_AWS_157: Entorno de demostracion de una sola zona; Multi-AZ duplica el costo de la instancia.
+  #checkov:skip=CKV_AWS_118: El monitoreo avanzado requiere un rol IAM adicional y tiene costo; se usa CloudWatch basico.
   identifier            = "plataforma-datos-rds-instance"
   db_name               = "plataformadatosdb"
   allocated_storage     = 20
@@ -11,6 +13,10 @@ resource "aws_db_instance" "rds_instance" {
   skip_final_snapshot   = true
   storage_encrypted     = true
   copy_tags_to_snapshot = true
+
+  deletion_protection                 = var.deletion_protection
+  iam_database_authentication_enabled = true
+  enabled_cloudwatch_logs_exports     = ["error", "general", "slowquery"]
 
   auto_minor_version_upgrade = true
   vpc_security_group_ids     = [aws_security_group.rds_sg.id]

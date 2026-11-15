@@ -13,3 +13,9 @@ variable "project" {
   description = "Nombre del proyecto"
   type        = string
 }
+
+variable "deletion_protection" {
+  description = "Protege la instancia RDS contra borrado. Ponlo en false antes de destruir el entorno de demostracion."
+  type        = bool
+  default     = true
+}
