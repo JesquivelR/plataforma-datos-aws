@@ -133,6 +133,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
+    description = "MySQL desde dentro de la VPC"
     cidr_blocks = ["10.0.0.0/16"] # Permitir acceso desde dentro de la VPC
   }
 
@@ -140,6 +141,7 @@ resource "aws_security_group" "rds_sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
+    description = "Salida general para actualizaciones y servicios gestionados"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

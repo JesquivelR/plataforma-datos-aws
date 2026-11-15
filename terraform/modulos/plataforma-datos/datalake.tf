@@ -19,6 +19,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket-config" {
       days = 5
     }
 
+    abort_incomplete_multipart_upload {
+      days_after_initiation = 7
+    }
+
     transition {
       days          = 4
       storage_class = "GLACIER"
@@ -74,4 +78,36 @@ data "aws_iam_policy_document" "allow_requests" {
 resource "aws_s3_bucket_policy" "datalake_policy" {
   bucket = aws_s3_bucket.datalake.id
   policy = data.aws_iam_policy_document.allow_requests.json
+}
+
+resource "aws_s3_bucket_public_access_block" "datalake" {
+  bucket                  = aws_s3_bucket.datalake.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_public_access_block" "log_bucket" {
+  bucket                  = aws_s3_bucket.log_bucket.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
+
+resource "aws_s3_bucket_versioning" "datalake" {
+  bucket = aws_s3_bucket.datalake.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_versioning" "log_bucket" {
+  bucket = aws_s3_bucket.log_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
 }
