@@ -1,4 +1,7 @@
 resource "aws_s3_bucket" "datalake" {
+  #checkov:skip=CKV2_AWS_62: Sin consumidores de eventos en la demostracion; las notificaciones requieren SNS o SQS adicionales.
+  #checkov:skip=CKV_AWS_144: La replicacion entre regiones duplica almacenamiento y costo en una demostracion de una sola region.
+  #checkov:skip=CKV_AWS_145: Se usa cifrado SSE-S3; una llave KMS propia agrega costo y administracion de llaves a la demostracion.
   bucket = "plataforma-datos-bucket"
 
   tags = {
@@ -37,6 +40,10 @@ resource "aws_s3_bucket_logging" "s3_logging" {
 }
 
 resource "aws_s3_bucket" "log_bucket" {
+  #checkov:skip=CKV2_AWS_62: Bucket de logs sin consumidores de eventos; las notificaciones requieren SNS o SQS adicionales.
+  #checkov:skip=CKV_AWS_144: La replicacion entre regiones de un bucket de logs de demostracion no justifica el costo.
+  #checkov:skip=CKV2_AWS_61: Bucket de logs de demostracion; la retencion se define al desplegar segun el entorno.
+  #checkov:skip=CKV_AWS_145: Los logs de acceso de S3 solo admiten cifrado SSE-S3, no KMS.
   bucket = "plataforma-datos-log-bucket"
 
   tags = {

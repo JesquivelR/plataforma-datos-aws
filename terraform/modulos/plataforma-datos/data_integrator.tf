@@ -20,6 +20,8 @@ data "aws_iam_policy_document" "s3_policy_document" {
 }
 
 data "aws_iam_policy_document" "rds_policy_document" {
+  #checkov:skip=CKV_AWS_111: El crawler consulta instancias RDS que se crean en el mismo despliegue; en un entorno real se acotan las acciones de escritura.
+  #checkov:skip=CKV_AWS_356: Los ARN de los recursos dependen del despliegue; se restringe el recurso al pasar a un entorno real.
   statement {
     effect = "Allow"
     actions = [
@@ -79,6 +81,7 @@ resource "aws_glue_classifier" "s3_crawler_classifier" {
 }
 
 resource "aws_glue_crawler" "s3_crawler" {
+  #checkov:skip=CKV_AWS_195: La configuracion de seguridad de Glue exige una llave KMS adicional; no se justifica en una demostracion.
   name          = "s3_crawler"
   role          = aws_iam_role.glue_service_role.arn
   database_name = aws_glue_catalog_database.s3_db_crawler.name

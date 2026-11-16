@@ -1,4 +1,6 @@
 resource "aws_vpc" "plataforma_datos_vpc" {
+  #checkov:skip=CKV2_AWS_12: El grupo de seguridad por defecto no se usa; se declara uno propio para la base de datos.
+  #checkov:skip=CKV2_AWS_11: Los flow logs requieren un grupo de logs y un rol IAM con costo; se omiten en la demostracion.
   cidr_block = "10.0.0.0/16"
   tags = {
     Name        = "plataforma_datos_${var.project}_vpc"
@@ -10,6 +12,7 @@ resource "aws_vpc" "plataforma_datos_vpc" {
 }
 
 resource "aws_subnet" "public_subnet" {
+  #checkov:skip=CKV_AWS_130: La subred publica aloja la NAT Gateway, que necesita IP publica.
   vpc_id            = aws_vpc.plataforma_datos_vpc.id
   cidr_block        = "10.0.1.0/24"
   availability_zone = var.availability_zone
@@ -125,6 +128,7 @@ resource "aws_db_subnet_group" "rds_subnet_group" {
 }
 
 resource "aws_security_group" "rds_sg" {
+  #checkov:skip=CKV_AWS_382: La base de datos en subred privada sale a internet solo a traves de la NAT para actualizaciones.
   name        = "rds_sg"
   description = "Security group for RDS"
   vpc_id      = aws_vpc.plataforma_datos_vpc.id

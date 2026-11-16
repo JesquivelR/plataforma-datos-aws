@@ -100,6 +100,18 @@ Los hallazgos que se resuelven sin cambiar la arquitectura están corregidos en 
 |---|---|---|
 | CKV_AWS_157 | `aws_db_instance.rds_instance` | Entorno de demostración de una sola zona; Multi-AZ duplica el costo de la instancia |
 | CKV_AWS_118 | `aws_db_instance.rds_instance` | El monitoreo avanzado requiere un rol IAM adicional y tiene costo; se usa CloudWatch básico |
+| CKV2_AWS_62 | `aws_s3_bucket.datalake`, `aws_s3_bucket.log_bucket` | Sin consumidores de eventos en la demostración; las notificaciones requieren SNS o SQS adicionales |
+| CKV_AWS_144 | `aws_s3_bucket.datalake`, `aws_s3_bucket.log_bucket` | La replicación entre regiones duplica almacenamiento y costo en una demostración de una sola región |
+| CKV_AWS_145 | `aws_s3_bucket.datalake`, `aws_s3_bucket.log_bucket` | Cifrado SSE-S3 en lugar de KMS propio; en el bucket de logs S3 solo admite SSE-S3 |
+| CKV2_AWS_61 | `aws_s3_bucket.log_bucket` | La retención de logs se define al desplegar según el entorno |
+| CKV_AWS_111, CKV_AWS_356 | `aws_iam_policy_document.rds_policy_document` | El crawler consulta instancias RDS creadas en el mismo despliegue; en un entorno real se acotan las acciones y el recurso |
+| CKV_AWS_195 | `aws_glue_crawler.s3_crawler` | La configuración de seguridad de Glue exige una llave KMS adicional |
+| CKV_AWS_149 | `aws_secretsmanager_secret.rds_secret` | Llave administrada por AWS en lugar de KMS propia, para no sumar costo |
+| CKV2_AWS_57 | `aws_secretsmanager_secret.rds_secret` | La rotación automática requiere una función Lambda de rotación fuera del alcance |
+| CKV2_AWS_12 | `aws_vpc.plataforma_datos_vpc` | El grupo de seguridad por defecto no se usa; se declara uno propio para la base de datos |
+| CKV2_AWS_11 | `aws_vpc.plataforma_datos_vpc` | Los flow logs requieren grupo de logs y rol IAM con costo |
+| CKV_AWS_130 | `aws_subnet.public_subnet` | La subred pública aloja la NAT Gateway, que necesita IP pública |
+| CKV_AWS_382 | `aws_security_group.rds_sg` | La base de datos sale a internet solo a través de la NAT, para actualizaciones |
 
 ## Costos aproximados
 
